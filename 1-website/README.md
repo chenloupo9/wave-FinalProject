@@ -12,6 +12,52 @@ The files inside this directory will create using terraform an vpc with public a
 - output.tf (show the output of the instances ip address and the ALB) 
 - alb.tf (creates an alb that will route traffic to the private instances) 
 
+## Quick Start 
+### 1. Export your aws access key and secret key 
+``` 
+export AWS_ACCESS_KEY="<aws_access_key>" 
+export AWS_SECRET_KEY="<aws_secret_key>" 
+``` 
+
+### 2. Clone git repository 
+```
+git clone https://github.com/chenloupo9/wave-FinalProject.git 
+```
+- Make sure terraform is installed or use the script to install it 
+```
+cd wave-FinalProject
+cd files 
+bash terraform-installition.sh
+``` 
+
+### 3. Create an ssh-key named aws_key inside 1-website directory 
+```
+cd wave-FinalProject 
+cd 1-website 
+ssh-keygen
+``` 
+
+### 4. Run Terraform files as follow 
+``` 
+terraform init 
+terraform plan
+terraform apply -auto-approve 
+``` 
+
+### 5. Copy terraform output to a file and send it to bastion-instance 
+```
+terraform output > ip-address.txt
+scp -i aws_key ip-address.txt ubuntu@<dest-ip>:/home/ubuntu 
+```
+
+### 6. Login to bastion-instance 
+```
+ssh -i aws_key ubuntu@<dest-ip> 
+```
+
+
+
+
 
 
 
