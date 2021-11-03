@@ -6,7 +6,7 @@ sudo apt update
 sudo apt install terraform 
 terraform -install-autocomplete 
 source /home/dev/.bashrc 
-echo export AWS_ACCESS_KEY_ID=AKIA6ANAZ5ES5LK2NG4U >> ~/.bashrc
-echo export AWS_SECRET_ACCESS_KEY=hOVNIdnOi2be2K2bjBy1iCiDZfOFJ1ZQsGozGLnB >> ~/.bashrc
+echo export AWS_ACCESS_KEY_ID="<your_access_key>" >> ~/.bashrc
+echo export AWS_SECRET_ACCESS_"<your_secret_key" >> ~/.bashrc
 echo export AWS_DEFAULT_REGION=eu-central-1 >> ~/.bashrc
 source ~/.bashrc
