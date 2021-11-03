@@ -29,9 +29,4 @@ variable "instance_type" {
   default = "t2.micro" 
 }
 
-variable "demo_dns_zone" {
-} 
 
-variable "demo_dns_name" {
-  default     = "demo-ssl"
-}
