@@ -1,0 +1,14 @@
+#!/usr/bin/env groovy
+node {
+    def commit_id
+    stage('Prepare') {
+        git 'https://github.com/chenloupo9/wave-FinalProject'
+        sh "git rev-parse --short HEAD > .git/commit-id"
+        commit_id = readFile('.git/commit-id')
+    }
+    
+    stage('docker Build') {
+        docker.withRegistry('https://962946787621.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-central-1:demo-repo') 
+           docker.build("pyhton-app").push("${commit_id}")
+         }
+    }
