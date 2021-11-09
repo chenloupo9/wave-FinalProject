@@ -8,7 +8,9 @@ node {
     }
     
     stage('docker Build') {
-        docker.withRegistry('https://962946787621.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-central-1:demo-repo') 
-           docker.build("pyhton-app").push("${commit_id}")
-         }
+        sh 'docker build -t python-app .'
+		sh 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 962946787621.dkr.ecr.eu-central-1.amazonaws.com'
+		sh 'docker tag docker tag demo-repo:latest 962946787621.dkr.ecr.eu-central-1.amazonaws.com/demo-repo:${commit-id}'
+		sh 'docker push 962946787621.dkr.ecr.eu-central-1.amazonaws.com/demo-repo:${commit_id}'
+         }	
     }
