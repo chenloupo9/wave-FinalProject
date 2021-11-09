@@ -2,7 +2,7 @@
 node {
     def commit_id
     stage('Prepare') {
-        git 'https://github.com/chenloupo9/wave-FinalProject'
+        git 'https://github.com/chenloupo9/wave-FinalProject.git'
         sh "git rev-parse --short HEAD > .git/commit-id"
         commit_id = readFile('.git/commit-id')
     }
