@@ -28,14 +28,8 @@ git clone https://github.com/chenloupo9/wave-FinalProject.git
 cd wave-FinalProject
 cd files 
 bash terraform-installition.sh
-``` 
-- Install AWS-CLI, eksctl and kubectl 
-``` 
-bash awscli-install.sh
-bash eksctl-install.sh
-bash kubectl-install.sh 
 ```
-
+ 
 ### 3. Run Terraform files as follow 
 ```
 cd ~/wave-FinalProject/2-eks-cluster 
@@ -45,7 +39,15 @@ terraform apply -auto-approve
 ```
 - It may takr between 15-20 minutes for the cluster yo be up and running
 
-### 4. Login to your EKS-cluster
+### 4. Install AWS-CLI, eksctl and kubectl
+```
+cd ~/wave-FinalProject/files
+bash awscli-install.sh
+bash eksctl-install.sh
+bash kubectl-install.sh
+```
+
+### 5. Login to your EKS-cluster
 ```
 aws eks update-kubeconfig --name eks_cluster --region eu-central-1
 ```
