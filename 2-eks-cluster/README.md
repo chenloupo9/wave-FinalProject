@@ -16,6 +16,7 @@ The files in side this directory will create using terraform an vpc with public 
 ``` 
 export AWS_ACCESS_KEY="<aws_access_key>" 
 export AWS_SECRET_KEY="<aws_secret_key>" 
+export AWS_DEFAULT_REGION=eu-central-1
 ``` 
 
 ### 2. Clone git repository 
@@ -28,13 +29,30 @@ cd wave-FinalProject
 cd files 
 bash terraform-installition.sh
 ``` 
+- Install AWS-CLI, eksctl and kubectl 
+``` 
+bash awscli-install.sh
+bash eksctl-install.sh
+bash kubectl-install.sh 
+```
 
 ### 3. Run Terraform files as follow 
 ```
-cd 2-eks-cluster 
+cd ~/wave-FinalProject/2-eks-cluster 
 terraform init 
 terraform plan 
 terraform apply -auto-approve
+```
+- It may takr between 15-20 minutes for the cluster yo be up and running
+
+### 4. Login to your EKS-cluster
+```
+aws eks update-kubeconfig --name eks_cluster --region eu-central-1
+```
+
+- To destroy all the resources that were created using terraform 
+```
+terraform destroy -auto-approve
 ```
 
  
