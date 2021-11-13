@@ -7,7 +7,6 @@ The files inside this directory will create using terraform an vpc with public a
 - vars.tf (Variables used within different files) 
 - securitygroup.tf (creates the security groups for the ec2 instances and the ALB)
 - nat.tf (creates the NAT-Gateway for the private instances) 
-- autoscaling.tf (create an autoscaling group for the instances) 
 - instance.tf (creates 3 ec2 instances, 1 in the public subnet and 2 in the private subnets)
 - output.tf (show the output of the instances ip address and the ALB) 
 - alb.tf (creates an alb that will route traffic to the private instances) 
@@ -16,7 +15,8 @@ The files inside this directory will create using terraform an vpc with public a
 ### 1. Export your aws access key and secret key 
 ``` 
 export AWS_ACCESS_KEY="<aws_access_key>" 
-export AWS_SECRET_KEY="<aws_secret_key>" 
+export AWS_SECRET_KEY="<aws_secret_key>"
+export AWS_DEFAULT_REGION=eu-central-1 
 ``` 
 
 ### 2. Clone git repository 
@@ -44,17 +44,38 @@ terraform plan
 terraform apply -auto-approve 
 ``` 
 
-### 5. Copy terraform output to a file and send it to bastion-instance 
+### 5. Find the public address of bastion-instance
 ```
-terraform output > ip-address.txt
-scp -i aws_key ip-address.txt ubuntu@<dest-ip>:/home/ubuntu 
-```
-
-### 6. Login to bastion-instance 
-```
-ssh -i aws_key ubuntu@<dest-ip> 
+terraform output
 ```
 
+### 6. Login to bastion-instance with the public address
+```
+ssh -i aws_key ubuntu@<public-ip>
+```
+
+### 7. Update and install ansible
+```
+sudo apt update && sudo apt install ansible -y 
+```
+
+### 8. Go to the ansibel directory and check that you can ping the private-instances
+```
+cd ansible
+ansible all -i inventory -m ping -b -u ubuntu
+```
+
+### 9. Run the ansible-playbook docker-demo.yaml
+```
+ansible-playbook docker-demo.yaml
+```
+
+### 10. Copy the dns-name of the Application Load Balancer to the browser
+```
+cat ~/alb-name
+```
+
+- you should see the web-page running
 
 
 

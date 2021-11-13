@@ -5,10 +5,30 @@ resource "aws_instance" "bastion-instance" {
   subnet_id = aws_subnet.main-public-1.id
   vpc_security_group_ids = [aws_security_group.instance-sg.id]
   key_name = aws_key_pair.aws_key.key_name
+
+  provisioner "file" { 
+    source      = "../ansible" 
+    destination = "/home/ubuntu" 
+  } 
+
+  provisioner "file" { 
+    source      = "../test" 
+    destination = "/home/ubuntu" 
+  } 
+ 
   provisioner "file" { 
     source      = "aws_key" 
     destination = "/home/ubuntu/.ssh/aws_key" 
   }
+
+  provisioner "remote-exec" { 
+    inline = [
+      "sudo chmod 0400 /home/ubuntu/.ssh/aws_key",
+      "echo ${aws_instance.private-instance-1.private_ip} >> /home/ubuntu/ansible/inventory",
+      "echo ${aws_instance.private-instance-2.private_ip} >> /home/ubuntu/ansible/inventory",
+      "echo ${aws_alb.demo-ALB.dns_name} > /home/ubuntu/alb-name",
+    ]
+}
     connection { 
       type        = "ssh" 
       user        = "ubuntu" 

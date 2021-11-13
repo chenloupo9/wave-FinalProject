@@ -20,15 +20,18 @@ resource "aws_alb_target_group" "demo-TG" {
   vpc_id      = aws_vpc.main.id
 
   health_check { 
-    healthy_threshold   = "2"
-    unhealthy_threshold = "2"
-    interval            = "6"
-    matcher             = "200,301,302"
+    healthy_threshold   = 2
+    unhealthy_threshold = 10
+    interval            = 10
     path                = "/"
-    port                = "traffic-port"
+    port                = 80
     protocol            = "HTTP"
   }
-}  
+  tags = { 
+    Name = "demo-TG" 
+  }
+}
+
 
 # create listener for http
 resource "aws_alb_listener" "listener-http" {  
@@ -37,25 +40,22 @@ resource "aws_alb_listener" "listener-http" {
   protocol          = "HTTP"
 
   default_action { 
-    type = "redirect" 
-
-    redirect { 
-      port          = "443" 
-      protocol      = "HTTPS" 
-      path          = "/"
-      status_code   = "HTTP_301" 
+    target_group_arn = aws_alb_target_group.demo-TG.arn 
+    type             = "forward"
     } 
   }
+
+# create attachment to target group for private-instance-1
+resource "aws_alb_target_group_attachment" "TG-private-1" { 
+  target_group_arn      = aws_alb_target_group.demo-TG.arn 
+  target_id             = aws_instance.private-instance-1.id
+  port                  = 80
 }
-# create listener for https 
-resource "aws_alb_listener" "listener-https" {
-  load_balancer_arn = aws_alb.demo-ALB.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate_validation.cert.certificate_arn
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_alb_target_group.demo-TG.arn
-  }
+
+# create attachment to target group for private-instance-2
+resource "aws_alb_target_group_attachment" "TG-private-2" {
+  target_group_arn      = aws_alb_target_group.demo-TG.arn
+  target_id             = aws_instance.private-instance-2.id
+  port                  = 80
 }
- 
+

@@ -1,0 +1,24 @@
+- name: create docker containers on private-instances 
+  hosts: all 
+  become: true 
+  gather_facts: yes 
+  tasks: 
+    - name: update apt 
+      apt: update_cache=yes cache_valid_time=3600 
+
+    - name: upgrade apt 
+      apt: upgrade=dist 
+    
+    - name: copy test directory 
+      copy: 
+        src: /home/ubuntu/test
+        dest: /home/ubuntu/ 
+        owner: ubuntu 
+        group: ubuntu 
+        mode: '0644' 
+    
+    - name: create docker image 
+      command: sudo docker build -t demo /home/ubuntu/test/
+
+    - name: create docker container 
+      command: sudo docker container run -d -p 80:5000 demo 
