@@ -77,6 +77,17 @@ cat ~/alb-name
 
 - you should see the web-page running
 
+**To destory all the resources that were created you need to exit the bastion-instance**
+```
+cd 
+exit
+```
+
+**make sure you are at the right directory (you should be at /home/ubuntu/wave-FinalProject/1-website), and run the terraform command
+```
+terraform destroy -auto-approve
+```
+
 
 
 
