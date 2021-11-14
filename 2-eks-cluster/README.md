@@ -43,8 +43,8 @@ terraform apply -auto-approve
 ```
 cd ~/wave-FinalProject/files
 bash awscli-install.sh
-bash eksctl-install.sh
 bash kubectl-install.sh
+bash eksctl-install.sh
 ```
 
 ### 5. Login to your EKS-cluster
