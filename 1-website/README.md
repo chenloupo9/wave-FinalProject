@@ -25,15 +25,13 @@ git clone https://github.com/chenloupo9/wave-FinalProject.git
 ```
 - Make sure terraform is installed or use the script to install it 
 ```
-cd wave-FinalProject
-cd files 
+cd ~/wave-FinalProject/files/ 
 bash terraform-installition.sh
 ``` 
 
 ### 3. Create an ssh-key named aws_key inside 1-website directory 
 ```
-cd wave-FinalProject 
-cd 1-website 
+cd ~/wave-FinalProject/1-website/
 ssh-keygen
 ``` 
 
