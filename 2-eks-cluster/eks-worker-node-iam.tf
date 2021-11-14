@@ -26,7 +26,8 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_attach_policy_to_worker_r
     "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
     "arn:aws:iam::aws:policy/AmazonEKSServicePolicy",
     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
-    "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+    "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser",
   ])
 
 
